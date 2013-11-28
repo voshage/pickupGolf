@@ -3,7 +3,7 @@ ruby '2.0.0'
 gem 'rails', '4.0.0'
 gem 'pg'
 
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.1.2'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'haml-rails'
 gem 'jbuilder', '~> 1.2'
