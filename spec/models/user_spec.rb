@@ -2,15 +2,18 @@ require 'spec_helper'
 
 describe User do
 
-  before { @user = User.new(first_name: "Example", last_name: "User", profile_name: "user", email: "user@example.com") }
+  before { @user = User.new(first_name: "Example", last_name: "User", 
+  														profile_name: "user", email: "user@example.com", 
+  														password: "password", password_confirmation: "password") }
 
   subject { @user }
 
   it { should respond_to(:first_name) }
   it { should respond_to(:email) }
   it { should respond_to(:password_digest) }
-  it { should respond_to(:password) }
-  it { should respond_to(:password_confirmation) }
+  it { should respond_to(:password) } # these are added to the user
+  it { should respond_to(:password_confirmation) } # after has_secure_password is called
+  it { should respond_to(:authenticate) }
 
   describe "first_name is not present" do
   	before { @user.first_name = "" }
@@ -21,7 +24,6 @@ describe User do
   	before { @user.last_name = "" }
   	it { should_not be_valid }
   end
-
 
 
   describe "when profile_name" do
@@ -65,4 +67,44 @@ describe User do
 	  	it { should be_new_record }
 	  end
 	end
+
+	describe "when password is" do
+
+		describe "too short" do
+			# should be at least 6 chars
+			before { @user.password = @user.password_confirmation = "a" * 5 }
+
+			it { should be_invalid }
+		end
+
+		describe "retun value of authethod method" do
+			before { @user.save }
+			# let creates local varible
+			let(:found_user) { User.find_by(email: @user.email ) }
+
+			describe "with valid password" do
+				# authenticate returns the found_user if true
+				it { should eq found_user.authenticate(@user.password) }
+			end
+
+			describe "with invalid password" do
+				let(:user_for_invalid_password) { found_user.authenticate("invalid") }
+     
+     		it { should_not eq user_for_invalid_password }
+     		# specify is the same as it
+      	specify { expect(user_for_invalid_password).to be_false }
+			end
+
+		end
+	end
+
+	 describe "email address with mixed case" do
+    let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
+
+    it "should be saved as all lower-case" do
+      @user.email = mixed_case_email
+      @user.save
+      expect(@user.reload.email).to eq mixed_case_email.downcase
+    end
+  end
 end
