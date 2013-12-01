@@ -1,7 +1,9 @@
 PickupSports::Application.routes.draw do
 
-  get "user/new"
   resources :users
+  root "users#index"
+  
+  match "/signup", to: "users#new", via: "get"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

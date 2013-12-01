@@ -27,5 +27,9 @@ class User < ActiveRecord::Base
 			                  	message: 'Must be formatted correctly.'
 			                   }
 	validates :password, length: { minimum: 6 }
-	validates :password_confirmation, length: { minimum: 6 }
+
+	def full_name
+		first_name + " " + last_name
+	end
+
 end
