@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%h1= @user.full_name
+
+= link_to 'Edit', edit_user_path(@user)
+\|
+= link_to 'Back', users_path
+
+/ %strong{:class => "code", :id => "message"} Hello, World!
+/ %strong.code#message Hello, World!
+
+/ <div class='item' id='item<%= item.id %>'>
+/   <%= item.body %>
+/ </div>
+/ .item{:id => "item#{item.id}"}= item.body
