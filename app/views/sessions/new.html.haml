@@ -1,0 +1,16 @@
+%h1 Sign In
+
+.row
+	.span6.offset3
+		= form_for(:session, url: sessions_path) do |f|
+			= f.label :email
+			= f.text_field :email
+
+			= f.label :password
+			= f.password_field :password
+
+			=f.submit "Sign In"
+
+%p 
+	New user?
+	= link_to "Sign Up Now!", signup_path
