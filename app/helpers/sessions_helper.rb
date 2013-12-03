@@ -1,8 +1,4 @@
 module SessionsHelper
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> recover1
 
 	def sign_in(user)
 		remember_token = User.new_remember_token
@@ -29,9 +25,4 @@ module SessionsHelper
 		self.current_user = nil
 		cookies.delete(:remember_token)
 	end
-<<<<<<< HEAD
-=======
->>>>>>> 3833af5... create sessions controller and start tests
-=======
->>>>>>> recover1
 end

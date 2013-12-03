@@ -2,14 +2,11 @@ require 'spec_helper'
 
 describe SessionsController do
 
-<<<<<<< HEAD
 	describe "should get new signup page" do
 		before { visit signin_path }
 		subject { controller }
 		it { should assigns(:user) }
 	end
-end
-=======
 end
 
 # describe TeamsController do
@@ -26,4 +23,3 @@ end
 #     end
 #   end
 # end
->>>>>>> recover1
