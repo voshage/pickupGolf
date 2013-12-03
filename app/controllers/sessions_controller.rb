@@ -1,5 +1,8 @@
 class SessionsController < ApplicationController
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> recover1
 
 	def new
 
@@ -21,6 +24,9 @@ class SessionsController < ApplicationController
 		sign_out
 		redirect_to root_url
 	end
+<<<<<<< HEAD
 =======
 >>>>>>> 3833af5... create sessions controller and start tests
+=======
+>>>>>>> recover1
 end

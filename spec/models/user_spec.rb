@@ -10,6 +10,7 @@ describe User do
 
   it { should respond_to(:first_name) }
   it { should respond_to(:email) }
+  it { should respond_to(:remember_token) }
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) } # these are added to the user
   it { should respond_to(:password_confirmation) } # after has_secure_password is called
@@ -98,7 +99,7 @@ describe User do
 		end
 	end
 
-	 describe "email address with mixed case" do
+	describe "email address with mixed case" do
     let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
 
     it "should be saved as all lower-case" do
@@ -106,5 +107,10 @@ describe User do
       @user.save
       expect(@user.reload.email).to eq mixed_case_email.downcase
     end
+  end
+
+  describe "remember_token" do
+  	before { @user.save }
+  	its(:remember_token) { should_not be_blank } # it { expect(@user.remember_token).not_to be_blank }
   end
 end

@@ -37,6 +37,14 @@ describe "User pages" do
 			it "should change User db count" do
 				expect { click_button submit }.to change(User, :count).by(1)
 			end
+			describe "after saving user" do
+				before { click_button submit }
+				let(:user) { User.find_by(email: 'cw2@gmail.com') }
+
+				it { should have_link("Sign Out") }
+				it { should have_content(user.full_name) }
+				it { should have_selector('div.alert.alert-notice', text: 'Welcome') }
+			end
 		end
 	end
 end
