@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 			if @user.save
 				format.html do
 					flash[:notice] = "Welcome to the Sample App!"
+					sign_in @user
 		        	redirect_to users_path(@user)
 		        end
 			else
