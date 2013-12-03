@@ -17,7 +17,10 @@ class UsersController < ApplicationController
 
    		respond_to do |format|
 			if @user.save
-	        	format.html { redirect_to users_path(@user), notice: 'Welcome to pickup Golf!' }
+				format.html do
+					flash[:notice] = "Welcome to the Sample App!"
+		        	redirect_to users_path(@user)
+		        end
 			else
 				format.html { render action: "new" }
 			end
