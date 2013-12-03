@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
 	before_save { self.email = email.downcase }
+	before_create :create_remember_token
 	
 	# reason we dont need attr_accessibles? ---deprectaed_mass_assignment_security
 
@@ -32,4 +33,18 @@ class User < ActiveRecord::Base
 		first_name + " " + last_name
 	end
 
+	def User.encrypt(token)
+		Digest::SHA1.hexdigest(token.to_s)
+	end
+
+	def User.new_remember_token
+		SecureRandom.urlsafe_base64
+	end
+
+
+	private
+
+		def create_remember_token
+			self.remember_token = User.encrypt(User.new_remember_token)
+		end
 end
