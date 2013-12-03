@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+<<<<<<< HEAD
 
 	def new
 
@@ -20,4 +21,6 @@ class SessionsController < ApplicationController
 		sign_out
 		redirect_to root_url
 	end
+=======
+>>>>>>> 3833af5... create sessions controller and start tests
 end
