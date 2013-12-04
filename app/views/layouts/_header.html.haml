@@ -1,26 +1,27 @@
-%header.navbar.navbar-fixed-top.nav-bar.inverse
-  .navbar-inner
-    .container
-      = link_to "Pickup Golf", root_path, id: "logo"
-      %nav
-        %ul.nav.pull-right
-          %li
-            = link_to "Home", root_path
-          %li
-            = link_to "Help", root_path
-          - if signed_in?
+%header
+  .navbar.navbar-fixed-top.inverse
+    .navbar-inner
+      .container
+        = link_to "Pickup Golf", root_path, class: "brand"
+        %nav
+          %ul.nav.pull-right
             %li
-              = link_to "Users", users_path
-            %li#fat-menu.dropdown
-              %a.dropdown-toggle{:href => "#", :data => {:toggle => "dropdown"}} Account
-              %ul.dropdown-menu
-                %li
-                  = link_to "Profile", current_user
-                %li 
-                  = link_to "Settings", '#'
-                %li.divider
-                %li
-                  = link_to "Sign Out", signout_path, method: "delete"
-          - else
-            %li
-              = link_to "Sign In", signin_path
+              = link_to "Home", root_path
+            - if signed_in?
+              %li
+                = link_to "Users", users_path
+              %li.dropdown
+                %a.dropdown-toggle{:href => "#", :data => {:toggle => "dropdown"}} 
+                  Account 
+                  %b.caret
+                %ul.dropdown-menu
+                  %li
+                    = link_to "Profile", current_user
+                  %li 
+                    = link_to "Settings", '#'
+                  %li.divider
+                  %li
+                    = link_to "Sign Out", signout_path, method: "delete"
+            - else
+              %li
+                = link_to "Sign In", signin_path
