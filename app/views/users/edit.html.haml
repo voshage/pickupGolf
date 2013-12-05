@@ -1,6 +1,35 @@
-%h1 Editing user
+%h1 Edit Your Info
 
-= render 'form'
+= form_for(@user) do |f|
+	- if @user.errors.any?
+		#error_explanation
+			%h2.alert.alert-error="#{pluralize(@user.errors.count, "error")} prohibited this user from being updated"
+			%ul
+				- @user.errors.full_messages.each do |msg|
+					%li= msg
+					
+	.field
+		= f.label :first_name, "First Name"
+		= f.text_field :first_name
+	.field
+		= f.label :last_name, "Last Name"
+		= f.text_field :last_name
+	.field
+		= f.label :profile_name, "Profile Name"
+		= f.text_field :profile_name
+	.field
+		= f.label :email
+		= f.text_field :email, type: "email"
+	%br
+	.field
+		= f.label :password, "Password"
+		= f.text_field :password, type: "password"
+	.field
+		= f.label :password_confirmation, "Confirmation"
+		= f.text_field :password_confirmation, type: "password"
+
+	.action 
+		= f.submit "Update Info"
 
 = link_to 'Show', @user
 \|

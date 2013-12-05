@@ -30,8 +30,8 @@ describe "User pages" do
 				fill_in 'Last Name', with: "Wolfe"
 				fill_in 'Profile Name', with: "WWCWD"
 				fill_in 'Email', with: "cw2@gmail.com"
-				fill_in 'Password', with: "ImStuckInTheCloset"
-				fill_in 'Confirmation', with: "ImStuckInTheCloset"
+				fill_in 'Password', with: "Password"
+				fill_in 'Confirmation', with: "Password"
 			end
 
 			it "should change User db count" do
@@ -46,5 +46,40 @@ describe "User pages" do
 				it { should have_selector('div.alert.alert-notice', text: 'Welcome') }
 			end
 		end
+	end
+
+	describe "edit page" do
+		let(:user) {FactoryGirl.create(:user)}
+		let(:updateButton) { 'Update Info' }
+		before do 
+			sign_in user
+			visit edit_user_path(user)
+		end
+
+		it { should have_content("Edit Your Info") }
+
+		describe "invalid info entered" do
+			before do
+				fill_in "Email", with: ""
+				fill_in "Password", with: user.password
+				fill_in "Confirmation", with: user.password
+				click_button updateButton
+			end
+
+			it { should have_selector('div.alert.alert-error'), text: "Invalid" }
+		end
+
+		describe "with valid information" do
+			let(:new_email) { "newemail@gmail.com" }
+			before do
+				fill_in "Email", with: new_email
+				fill_in "Password", with: user.password
+				fill_in "Confirmation", with: user.password
+				click_button updateButton
+			end
+			it { should have_selector('div.alert.alert-success') }
+			specify { expect(user.reload.email).to eq new_email }
+		end
+
 	end
 end
