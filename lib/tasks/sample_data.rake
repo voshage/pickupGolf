@@ -6,7 +6,8 @@ namespace :db do
     			 profile_name: "sdogood",
                  email: "andrew.voshage@gmail.com",
                  password: "password",
-                 password_confirmation: "password")
+                 password_confirmation: "password",
+                 admin: true)
     99.times do |n|
       first_name = Faker::Name.first_name
       last_name = Faker::Name.last_name

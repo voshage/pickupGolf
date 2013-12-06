@@ -15,6 +15,19 @@ describe User do
   it { should respond_to(:password) } # these are added to the user
   it { should respond_to(:password_confirmation) } # after has_secure_password is called
   it { should respond_to(:authenticate) }
+  it { should respond_to(:admin) }
+
+  it { should be_valid }
+  it { should_not be_admin }
+
+  describe "with admin attribute set to 'true'" do
+  	before do
+  		@user.save!
+  		@user.toggle!(:admin)
+  	end
+
+  	it { should be_admin }
+  end
 
   describe "first_name is not present" do
   	before { @user.first_name = "" }
