@@ -13,6 +13,7 @@ gem 'jquery-rails'
 gem 'sass-rails', '~> 4.0.0'
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
+gem 'faker', '1.1.2'
 
 group :development, :test do
   gem 'rspec-rails'
