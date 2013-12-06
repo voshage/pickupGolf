@@ -2,11 +2,12 @@ require 'spec_helper'
 
 describe "Authentication" do 
 
-	subject { page }
+	 subject { page }
 
 	describe "signin page" do
 		before { visit signin_path }
-
+		# without page above this test would be:
+		# it { expect(page).to have_content("Sign In") }
 		it { should have_content("Sign In") }
 	end
 		
@@ -78,12 +79,29 @@ describe "Authentication" do
 			describe "submitting a GET request to the Users#edit action" do
 				before { get edit_user_path(wrong_user) }
 				specify { expect(response).to redirect_to(root_url) }
-      end
+     		 end
 
-      describe "submitting a PATCH request to the Users#update action" do
+     		 describe "submitting a PATCH request to the Users#update action" do
 				before { patch user_path(wrong_user) }
 				specify { expect(response).to redirect_to(root_url) }
 			end
+		end
+		describe "for a non-signed-in user" do
+			let (:user) { FactoryGirl.create(:user) }
+			describe "when attempting to visit a protected page" do
+				before do
+					visit edit_user_path(user)
+					fill_in "Email", with: user.email
+					fill_in "Password", with: user.password
+					click_button "Sign In"
+				end
+				describe "after signing in" do
+					it "should render the desired protected page" do
+						expect(page).to have_content("Edit")
+					end
+				end
+			end
+
 		end
 	end
 end

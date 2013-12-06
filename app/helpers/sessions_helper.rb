@@ -29,4 +29,16 @@ module SessionsHelper
 		self.current_user = nil
 		cookies.delete(:remember_token)
 	end
+
+	def redirect_back_or(default)
+		# session is an rails helper
+		# acts like a cookie varible that automatically expires upon browser close
+		redirect_to(session[:return_to] || default) 
+		session.delete(:return_to)
+	end
+
+	def store_location
+		# save the wanted url if and only if the url request is a get request
+		session[:return_to] = request.url if request.get?
+	end
 end
