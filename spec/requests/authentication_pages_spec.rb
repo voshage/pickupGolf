@@ -32,6 +32,7 @@ describe "Authentication" do
 				click_button "Sign In"
 			end
 
+			it { should have_link("Users", href: users_path)}
 			it { should have_link("Profile", href: user_path(user))}
 			it { should have_link("Sign Out", href: signout_path)}
 			it { should_not have_link("Sign In", href: signin_path)}
@@ -69,6 +70,25 @@ describe "Authentication" do
 					before { patch user_path(user) }
 					specify { expect(response).to redirect_to(signin_path) }
 				end
+
+				describe "when attempting to visit a protected page" do
+					before do
+						visit edit_user_path(user)
+						fill_in "Email", with: user.email
+						fill_in "Password", with: user.password
+						click_button "Sign In"
+					end
+					describe "after signing in" do
+						it "should render the desired protected page" do
+							expect(page).to have_content("Edit")
+						end
+					end
+				end
+
+				describe "visiting the user index" do
+					before { visit users_path }
+					it { expect(page).to have_content("Sign In") }
+				end
 			end
 		end
 		describe "as wrong user" do
@@ -81,27 +101,10 @@ describe "Authentication" do
 				specify { expect(response).to redirect_to(root_url) }
      		 end
 
-     		 describe "submitting a PATCH request to the Users#update action" do
+     	describe "submitting a PATCH request to the Users#update action" do
 				before { patch user_path(wrong_user) }
 				specify { expect(response).to redirect_to(root_url) }
 			end
-		end
-		describe "for a non-signed-in user" do
-			let (:user) { FactoryGirl.create(:user) }
-			describe "when attempting to visit a protected page" do
-				before do
-					visit edit_user_path(user)
-					fill_in "Email", with: user.email
-					fill_in "Password", with: user.password
-					click_button "Sign In"
-				end
-				describe "after signing in" do
-					it "should render the desired protected page" do
-						expect(page).to have_content("Edit")
-					end
-				end
-			end
-
 		end
 	end
 end

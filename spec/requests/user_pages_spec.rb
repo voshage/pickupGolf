@@ -4,6 +4,24 @@ describe "User pages" do
 
 	subject { page }
 
+	describe "index" do
+		before do
+			sign_in FactoryGirl.create(:user)
+			FactoryGirl.create(:user, first_name: "Bob", profile_name: "Bob", email: "bob@gmail.com")
+			FactoryGirl.create(:user, first_name: "Bob", profile_name: "Sue", email: "sue@gmail.com")
+			visit users_path
+		end
+
+    	it { should have_content('All users') }
+
+    	it "should list each user" do
+    		User.all.each do |user|
+    			expect(page).to have_selector('td', text: user.full_name)
+    		end
+    	end
+	end
+
+
 	describe "profile page" do
 		let(:user) { FactoryGirl.create(:user) }
 		before { visit user_path(user) }
